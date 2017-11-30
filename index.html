@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>微软幻灯片</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/game.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="well" id="game">
+      <h1 id="monster">微软幻灯片还有二万八千八百点血！</h1>
+      <button type="button" class="btn btn-danger" id="daguai" onclick="attack_monster()">打怪</button>
+      <button type="button" class="btn btn-warning" id="chong" onclick="chongwan()">重玩</button>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script>
+      var chnNumChar = ["零","一","二","三","四","五","六","七","八","九"];
+      var chnUnitSection = ["","万","亿","万亿","亿亿"];
+      var chnUnitChar = ["","十","百","千"];
+      function SectionToChinese(section)
+      {
+        var strIns = '', chnStr = '';
+        var unitPos = 0;
+        var zero = true;
+        while(section > 0)
+        {
+          var v = section % 10;
+          if(v === 0)
+          {
+            if(!zero)
+            {
+              zero = true;
+              chnStr = chnNumChar[v] + chnStr;
+            }
+          }
+          else
+          {
+            zero = false;
+            strIns = chnNumChar[v];
+            strIns += chnUnitChar[unitPos];
+            chnStr = strIns + chnStr;
+          }
+          unitPos++;
+          section = Math.floor(section / 10);
+        }
+        return chnStr;
+      }
+      function NumberToChinese(num)
+      {
+        var unitPos = 0;
+        var strIns = '', chnStr = '';
+        var needZero = false;
+       
+        if(num === 0)
+        {
+          return chnNumChar[0];
+        }
+       
+        while(num > 0)
+        {
+          var section = num % 10000;
+          if(needZero)
+          {
+            chnStr = chnNumChar[0] + chnStr;
+          }
+          strIns = SectionToChinese(section);
+          strIns += (section !== 0) ? chnUnitSection[unitPos] : chnUnitSection[0];
+          chnStr = strIns + chnStr;
+          needZero = (section < 1000) && (section > 0);
+          num = Math.floor(num / 10000);
+          unitPos++;
+        }
+       
+        return chnStr;
+      }
+      var blood = 28800;
+      function attack_monster()
+      {
+        if (blood > 1)
+        {
+          blood--;
+          document.getElementById("monster").innerHTML = "微软幻灯片还有" + NumberToChinese(blood) + "点血！";
+        }
+        else
+          document.getElementById("monster").innerHTML = "微软幻灯片死了！";
+      }
+      function chongwan()
+      {
+        blood = 28800;
+        document.getElementById("monster").innerHTML = "微软幻灯片还有" + NumberToChinese(blood) + "点血！";
+      }
+    </script>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

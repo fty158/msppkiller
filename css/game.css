@@ -1,0 +1,29 @@
+* {
+  moz-user-select: -moz-none;
+  -moz-user-select: none;
+  -o-user-select:none;
+  -khtml-user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+
+#game {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#monster {
+  font-size: 128px;
+}
+
+#daguai {
+  margin-left: 200px;
+  font-size: 64px;
+}
+
+#chong {
+  margin-left: 200px;
+  font-size: 64px;
+}
